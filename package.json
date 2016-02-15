@@ -1,0 +1,25 @@
+{
+  "name": "gulp-release-easy",
+  "version": "4.1.9",
+  "description": "Simpliest gulp plugin for automated releasing and publishing to NPM ever",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "release"
+  ],
+  "author": "Nghi Le Vinh",
+  "license": "MIT",
+  "dependencies": {
+    "gulp-bump": "^1.0.0",
+    "gulp-git": "^1.7.0",
+    "gulp-util": "^3.0.7",
+    "run-sequence": "^1.1.5",
+    "yargs": "^4.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
