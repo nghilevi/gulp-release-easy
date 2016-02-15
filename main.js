@@ -8,9 +8,9 @@ var helper = require('./helper');
 module.exports = function(gulp,config){
 
 	var config = config || {};
-	var defaultReleaseBranch = config.releaseBranch || argv.b || 'master';
-	var releaseType = config.releaseType || helper.defineReleaseType() || 'patch';
-	var excludeTask = config.excludeTask || argv.x;
+	var defaultReleaseBranch = argv.b || config.releaseBranch || 'master';
+	var releaseType = helper.defineReleaseType() || config.releaseType || 'patch';
+	var excludeTask = argv.x || config.excludeTask;
 
 	var release = function(version, cb) {
 		if(excludeTask === 'publish'){
