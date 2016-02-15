@@ -12,6 +12,8 @@ module.exports = function(gulp,config){
 	var releaseType = helper.defineReleaseType() || config.releaseType || 'patch';
 	var excludeTask = argv.x || config.excludeTask;
 
+	//TODO: add config for package.json
+
 	var release = function(version, cb) {
 		if(excludeTask === 'publish'){
 			runSequence(
