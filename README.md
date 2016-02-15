@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/gulp-release-easy.png?compact=true)](https://www.npmjs.com/package/gulp-release-easy)
+
 gulp-release-easy
 =========
 
