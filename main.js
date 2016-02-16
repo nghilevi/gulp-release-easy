@@ -30,24 +30,20 @@ module.exports = function(gulp,opts){
 	        .pipe(gulp.dest('./'));
 	});
 
-	gulp.task('commit-changes', function () {
+	gulp.task('commit-tag', function () {
 	    var version = helper.getPackageVersion(pkg);
 	    var message = 'Release v' + version;
 	    return gulp.src('.')
 	        .pipe(git.add())
-	        .pipe(git.commit(message));
-	});
-
-	gulp.task('create-tag', function(cb) {
-	    var version = helper.getPackageVersion(pkg);
-	    git.tag(version, 'Release v' + version, cb);
+	        .pipe(git.commit(message))
+	        .pipe(git.tag(version, 'Release v' + version));
 	});
 
 	gulp.task('push-changes', function(cb) {
 	    git.push('origin', defaultReleaseBranch, cb);
 	});
 
-	gulp.task('tag', function (cb) {
+	gulp.task('push-tag', function (cb) {
 	    git.push('origin', defaultReleaseBranch, {args: '--tags'}, cb);
 	});
 
@@ -60,9 +56,8 @@ module.exports = function(gulp,opts){
 			'pull-changes',
 			'bump',
 			'commit-changes',
-			'create-tag',
 			'push-changes',
-			'tag',
+			'push-tag',
 			excludeTask === 'publish' ? 'noop' : 'publish',
 			cb
 		];
