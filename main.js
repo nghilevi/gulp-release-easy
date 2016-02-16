@@ -66,7 +66,7 @@ module.exports = function(gulp,opts){
 			excludeTask === 'publish' ? 'noop' : 'publish',
 			cb
 		];
-		return runSequence.apply(tasks);
+		return runSequence.apply(this,tasks);
 	});
 }
 
