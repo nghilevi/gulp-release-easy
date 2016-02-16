@@ -30,13 +30,18 @@ module.exports = function(gulp,opts){
 	        .pipe(gulp.dest('./'));
 	});
 
-	gulp.task('commit-tag', function () {
+	gulp.task('commit-changes', function () {
 	    var version = helper.getPackageVersion(pkg);
 	    var message = 'Release v' + version;
 	    return gulp.src('.')
 	        .pipe(git.add())
-	        .pipe(git.commit(message))
-	        .pipe(git.tag(version, 'Release v' + version));
+	        .pipe(git.commit(message));
+	});
+
+	gulp.task('tag-changes', function(cb) {
+		var version = helper.getPackageVersion(pkg);
+	    var message = 'Release v' + version;
+	    git.tag(version, message,cb);
 	});
 
 	gulp.task('push-changes', function(cb) {
@@ -55,7 +60,8 @@ module.exports = function(gulp,opts){
 		var tasks = [
 			'pull-changes',
 			'bump',
-			'commit-tag',
+			'commit-changes',
+			'tag-changes',
 			'push-changes',
 			'push-tag',
 			excludeTask === 'publish' ? 'noop' : 'publish',
