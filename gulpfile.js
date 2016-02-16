@@ -1,5 +1,8 @@
 var gulp = require('gulp');
-require('./main')(gulp,{
-	//releaseBranch:'develop',
-	//excludeTask: 'publish'
-});
+
+var releaseOpts = {
+	//releaseBranch:'test',
+	excludeTask: 'publish'
+};
+
+require('./main')(gulp,releaseOpts);
