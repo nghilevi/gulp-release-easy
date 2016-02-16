@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 
 var releaseOpts = {
-	//releaseBranch:'test',
+	releaseBranch:'test',
 	excludeTask: 'publish'
 };
 
