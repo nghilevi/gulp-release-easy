@@ -30,7 +30,7 @@ module.exports = function(gulp,opts){
 	        .pipe(gulp.dest('./'));
 	});
 
-	gulp.task('commit-changes', function () {
+	gulp.task('commit-changes', function (cb) {
 	    var version = helper.getPackageVersion(pkg);
 	    var message = 'Release v' + version;
 	    return gulp.src('.')
