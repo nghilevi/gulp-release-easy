@@ -2,31 +2,25 @@ var runSequence = require('run-sequence');
 var bump = require('gulp-bump');
 var git = require('gulp-git');
 var argv = require('yargs').argv;
+var gutil = require('gulp-util');
 
 var helper = require('./helper');
 
-module.exports = function(gulp,config){
+module.exports = function(gulp,opts){
 
-	var config = config || {};
-	var defaultReleaseBranch = argv.b || config.releaseBranch || 'master';
-	var releaseType = helper.defineReleaseType() || config.releaseType || 'patch';
-	var excludeTask = argv.x || config.excludeTask;
+	var opts = opts || {};
+	var defaultReleaseBranch = argv.b || opts.releaseBranch || 'master';
+	var releaseType = helper.defineReleaseType() || opts.releaseType || 'patch';
+	var excludeTask = argv.x || opts.excludeTask;
 
-	//TODO: add config for package.json
+	//TODO: add opts for package.json
 
 	var release = function(version, cb) {
-		if(excludeTask === 'publish'){
-			runSequence(
-		        'pre-publish',
-		        cb
-		    );		
-		}else{
-			runSequence(
-		        'pre-publish',
-		        'publish',
-		        cb
-		    );	
-		}
+		runSequence(
+	        'pre-publish',
+	        excludeTask === 'publish' ? gutil.noop() : 'publish',
+	        cb
+		);	
 	};
 	
 	gulp.task('pre-publish', function(cb) {
