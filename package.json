@@ -1,6 +1,6 @@
 {
   "name": "gulp-release-easy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simpliest gulp plugin for automated releasing and publishing to NPM ever",
   "main": "main.js",
   "scripts": {

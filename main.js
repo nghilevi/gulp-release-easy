@@ -18,11 +18,12 @@ module.exports = function(gulp,opts){
 	var release = function(version, cb) {
 		runSequence(
 	        'pre-publish',
-	        excludeTask === 'publish' ? gutil.noop() : 'publish',
+	        excludeTask === 'publish' ? 'noop' : 'publish',
 	        cb
 		);	
 	};
-	
+	gulp.task('noop', []);
+
 	gulp.task('pre-publish', function(cb) {
 		return	runSequence(
 		        'pull-changes',
@@ -36,7 +37,7 @@ module.exports = function(gulp,opts){
 	});
 
 	gulp.task('pull-changes', function(cb) {
-		var origin = 'feature/better-way-to-config';
+		var origin = 'origin';
 	    git.pull(origin, defaultReleaseBranch, cb);
 	});
 
