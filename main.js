@@ -2,7 +2,6 @@ var runSequence = require('run-sequence');
 var bump = require('gulp-bump');
 var git = require('gulp-git');
 var argv = require('yargs').argv;
-var gutil = require('gulp-util');
 
 var helper = require('./helper');
 
