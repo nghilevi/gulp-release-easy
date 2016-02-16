@@ -38,7 +38,8 @@ module.exports = function(gulp,opts){
 	        .pipe(git.commit(message))
 	        .pipe(git.tag(version, 'Release v' + version))
 	        .pipe(git.push('origin', defaultReleaseBranch))
-	        .pipe(git.push('origin', defaultReleaseBranch, {args: '--tags'}, cb));
+	        .pipe(git.push('origin', defaultReleaseBranch, {args: '--tags'}))
+	        .pipe(gulp.dest('./'));
 	});
 
 
