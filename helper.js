@@ -37,8 +37,7 @@ var getPackage = function(){
 
 };
 
-var getPackageVersion = function(){
-	var pkg = getPackage();
+var getPackageVersion = function(pkg){
 	return JSON.parse(fs.readFileSync(pkg[0], 'utf8')).version;
 };
 

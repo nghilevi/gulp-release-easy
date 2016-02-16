@@ -9,31 +9,16 @@ var helper = require('./helper');
 module.exports = function(gulp,opts){
 
 	var opts = opts || {};
+
 	var defaultReleaseBranch = argv.b || opts.releaseBranch || 'master';
 	var releaseType = helper.defineReleaseType() || opts.releaseType || 'patch';
 	var excludeTask = argv.x || opts.excludeTask;
+	var pkg = helper.getPackage()  || opts.pkg || ['package.json'];
+	var origin =  argv.o  || opts.origin || 'origin';
 
-	//TODO: add opts for package.json
-
-	var release = function(version, cb) {
-		runSequence(
-	        'pre-publish',
-	        excludeTask === 'publish' ? gutil.noop() : 'publish',
-	        cb
-		);	
-	};
+	//TODO: xclude task + readme
 	
-	gulp.task('pre-publish', function(cb) {
-		return	runSequence(
-		        'pull-changes',
-		        'bump',
-		        'commit-changes',
-		        'create-tag',
-		        'push-changes',
-		        'tag',
-		        cb
-		);
-	});
+	gulp.task('noop', []);
 
 	gulp.task('pull-changes', function(cb) {
 	    git.pull('origin', defaultReleaseBranch, cb);
@@ -46,7 +31,7 @@ module.exports = function(gulp,opts){
 	});
 
 	gulp.task('commit-changes', function () {
-	    var version = helper.getPackageVersion();
+	    var version = helper.getPackageVersion(pkg);
 	    var message = 'Release v' + version;
 	    return gulp.src('.')
 	        .pipe(git.add())
@@ -54,7 +39,7 @@ module.exports = function(gulp,opts){
 	});
 
 	gulp.task('create-tag', function(cb) {
-	    var version = helper.getPackageVersion();
+	    var version = helper.getPackageVersion(pkg);
 	    git.tag(version, 'Release v' + version, cb);
 	});
 
@@ -71,7 +56,17 @@ module.exports = function(gulp,opts){
 	});
 
 	gulp.task('release', function(cb) {
-	    release(releaseType, cb);
+		var tasks = [
+			'pull-changes',
+			'bump',
+			'commit-changes',
+			'create-tag',
+			'push-changes',
+			'tag',
+			excludeTask === 'publish' ? 'noop' : 'publish',
+			cb
+		];
+		return runSequence.apply(tasks);
 	});
 }
 
