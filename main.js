@@ -37,12 +37,14 @@ module.exports = function(gulp,opts){
 	        .pipe(git.add())
 	        .pipe(git.commit(message))
 	        .pipe(git.tag(version, 'Release v' + version))
-	        .pipe(git.push('origin', defaultReleaseBranch))
-	        .pipe(git.push('origin', defaultReleaseBranch, {args: '--tags'}))
-	        .pipe(gulp.dest('./'));
+	        .pipe(git.push('origin', defaultReleaseBranch),cb);
+	        //.pipe(git.push('origin', defaultReleaseBranch, {args: '--tags'}))
+	        //.pipe(gulp.dest('./'));
 	});
 
-
+	gulp.task('commit-tag', function (cb) {
+	    return gulp.src('.').pipe(git.push('origin', defaultReleaseBranch, {args: '--tags'},cb));
+	});
 
 	gulp.task('publish', function (cb) {
 	    require('child_process').exec('npm publish', cb);
@@ -53,6 +55,7 @@ module.exports = function(gulp,opts){
 			'pull-changes',
 			'bump',
 			'commit-changes',
+			'commit-tag',
 			excludeTask === 'publish' ? 'noop' : 'publish',
 			cb
 		];
