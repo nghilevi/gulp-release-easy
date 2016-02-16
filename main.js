@@ -35,21 +35,13 @@ module.exports = function(gulp,opts){
 	    var message = 'Release v' + version;
 	    return gulp.src('.')
 	        .pipe(git.add())
-	        .pipe(git.commit(message));
+	        .pipe(git.commit(message))
+	        .pipe(git.tag(version, 'Release v' + version, cb))
+	        .pipe(git.push('origin', defaultReleaseBranch, cb))
+	        .pipe(git.push('origin', defaultReleaseBranch, {args: '--tags'}, cb));
 	});
 
-	gulp.task('create-tag', function(cb) {
-	    var version = helper.getPackageVersion(pkg);
-	    git.tag(version, 'Release v' + version, cb);
-	});
 
-	gulp.task('push-changes', function(cb) {
-	    git.push('origin', defaultReleaseBranch, cb);
-	});
-
-	gulp.task('tag', function (cb) {
-	    git.push('origin', defaultReleaseBranch, {args: '--tags'}, cb);
-	});
 
 	gulp.task('publish', function (cb) {
 	    require('child_process').exec('npm publish', cb);
@@ -60,9 +52,6 @@ module.exports = function(gulp,opts){
 			'pull-changes',
 			'bump',
 			'commit-changes',
-			'create-tag',
-			'push-changes',
-			'tag',
 			excludeTask === 'publish' ? 'noop' : 'publish',
 			cb
 		];
