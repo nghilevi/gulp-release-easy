@@ -36,7 +36,8 @@ module.exports = function(gulp,opts){
 	});
 
 	gulp.task('pull-changes', function(cb) {
-	    git.pull('origin', defaultReleaseBranch, cb);
+		var origin = 'feature/better-way-to-config';
+	    git.pull(origin, defaultReleaseBranch, cb);
 	});
 
 	gulp.task('bump',function () {
