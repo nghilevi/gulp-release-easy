@@ -9,14 +9,15 @@ var helper = require('./helper');
 module.exports = function(gulp,opts){
 
 	var opts = opts || {};
-
+	
+	var origin =  argv.o  || opts.origin || 'origin';
 	var defaultReleaseBranch = argv.b || opts.releaseBranch || 'master';
 	var releaseType = helper.defineReleaseType() || opts.releaseType || 'patch';
 	var excludeTask = argv.x || opts.excludeTask;
 	var pkg = helper.getPackage()  || opts.pkg || ['package.json'];
-	var origin =  argv.o  || opts.origin || 'origin';
+	
 
-	//TODO: xclude task + readme
+	//TODO: better xclude tasks + readme
 	
 	gulp.task('noop', []);
 
@@ -55,7 +56,7 @@ module.exports = function(gulp,opts){
 		var tasks = [
 			'pull-changes',
 			'bump',
-			'commit-changes',
+			'commit-tag',
 			'push-changes',
 			'push-tag',
 			excludeTask === 'publish' ? 'noop' : 'publish',

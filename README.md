@@ -1,7 +1,7 @@
 gulp-release-easy
 =========
 
-A gulp plugin that helps you automate releasing and publishing to NPM easy than ever! I've used it in my pet project as well as used it to publish itself!
+A gulp plugin that helps you automate releasing and publishing to NPM easy than ever! All you need to do is issue `gulp release`. I've used it in my pet project as well as used it to publish itself!
 
 ## Usage
 `npm install gulp-release-easy --save-dev`
@@ -19,13 +19,12 @@ require('gulp-release-easy')(gulp,{releaseBranch:'develop'});
 
 See more about what you can pass in the config object below.
 
-So instead of manually:
-pull changes from release branch -> bump version -> commit -> tag -> push to release branch -> publish to NPM
-
-You can just simply issue:
+All you need to know is just simply issue:
 ```javascript
 gulp release
 ```
+Instead of manually:
+pull changes from release branch -> bump version -> commit -> tag -> push to release branch -> publish to NPM
 
 or a full version:
 ```javascript
@@ -36,11 +35,13 @@ gulp release -b my-release-branch --minor --bower
 Instead of typing parameters every time you issue `gulp release`, you can set them by default by passing the config object and then simply `gulp release`:
 ```javascript
 
-// all the properties are optional
+// all the properties below are optional
 require('gulp-release-easy')(gulp,{
-	releaseBranch:'develop' // Set 'develop' as the release branch 'master' is default
-	releaseType: 'minor' // or 'marjor' or 'patch' (which is default)
-	excludeTask: 'publish' // this will do all the tasks but NOT publishing to NPM
+	releaseBranch:'develop', // Set 'develop' as the release branch 'master' is default
+	releaseType: 'minor', // or 'marjor' or 'patch' (which is default)
+	excludeTask: 'publish', // this will do all the tasks but NOT publishing to NPM
+	origin: 'origin', //origin branch, default is 'origin'. Command line equivelence is `-o origin-branch-name`
+	pkg: 'package.json'
 });
 ```
 If you want instead want to type in the verbose version of your `gulp release`, you can pass along some parameters, this will override the config options you passed in `gulpfile.js`:
